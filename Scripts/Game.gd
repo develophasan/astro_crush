@@ -50,100 +50,100 @@ func _setup_ui():
 		top_style.border_color = Color(0.5, 0.3, 0.8, 0.9) # Purple neon edge
 		top_style.shadow_size = 8
 		
-var margin = 15
-				var top_bar = Panel.new()
-				top_bar.add_theme_stylebox_override("panel", top_style)
-				top_bar.size = Vector2(540 - margin*2, 120)
-				top_bar.position = Vector2(margin, margin)
-				ui.add_child(top_bar)
-				
-				# Center Logo
-				var logo = Sprite2D.new()
-				logo.texture = load("res://Assets/Images/logo.jpg")
-				logo.position = Vector2(top_bar.size.x / 2, 60) # Centered in the top bar
-				var mat = CanvasItemMaterial.new()
-				mat.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
-				logo.material = mat
-				if logo.texture:
-					var scale_ratio = 180.0 / logo.texture.get_height()
-					logo.scale = Vector2(scale_ratio, scale_ratio)
-				top_bar.add_child(logo)
-				
-				var bot_style = StyleBoxFlat.new()
-				bot_style.bg_color = Color(0.05, 0.05, 0.2, 0.85)
-				bot_style.corner_radius_top_left = 30
-				bot_style.corner_radius_top_right = 30
-				bot_style.corner_radius_bottom_left = 30
-				bot_style.corner_radius_bottom_right = 30
-				bot_style.border_width_top = 3
-				bot_style.border_width_bottom = 3
-				bot_style.border_color = Color(0.5, 0.3, 0.8, 0.9)
-				bot_style.shadow_size = 8
-				
-				var bottom_bar = Panel.new()
-				bottom_bar.add_theme_stylebox_override("panel", bot_style)
-				bottom_bar.size = Vector2(540 - margin*2, 110)
-				bottom_bar.position = Vector2(margin, get_viewport_rect().size.y - 110 - margin)
-				ui.add_child(bottom_bar)
-				
-				score_label = Label.new()
-				score_label.position = Vector2(20, 15)
-				score_label.add_theme_font_size_override("font_size", 24)
-				score_label.add_theme_color_override("font_outline_color", Color(0, 0, 0))
-				score_label.add_theme_constant_override("outline_size", 4)
-				top_bar.add_child(score_label)
-				
-				level_label = Label.new()
-				level_label.position = Vector2(20, 65)
-				level_label.add_theme_font_size_override("font_size", 24)
-				level_label.add_theme_color_override("font_outline_color", Color(0, 0, 0))
-				level_label.add_theme_constant_override("outline_size", 4)
-				top_bar.add_child(level_label)
-				
-				moves_label = Label.new()
-				moves_label.position = Vector2(top_bar.size.x - 170, 15)
-				moves_label.add_theme_font_size_override("font_size", 24)
-				moves_label.add_theme_color_override("font_outline_color", Color(0, 0, 0))
-				moves_label.add_theme_constant_override("outline_size", 4)
-				top_bar.add_child(moves_label)
-				
-				target_label = Label.new()
-				target_label.position = Vector2(top_bar.size.x - 170, 65)
-				target_label.add_theme_font_size_override("font_size", 24)
-				target_label.add_theme_color_override("font_outline_color", Color(0, 0, 0))
-				target_label.add_theme_constant_override("outline_size", 4)
-				top_bar.add_child(target_label)
-				
-				var btn_style = StyleBoxFlat.new()
-				btn_style.bg_color = Color(0.2, 0.1, 0.5, 0.9)
-				btn_style.corner_radius_top_left = 15
-				btn_style.corner_radius_top_right = 15
-				btn_style.corner_radius_bottom_left = 15
-				btn_style.corner_radius_bottom_right = 15
-				btn_style.border_width_bottom = 4
-				btn_style.border_color = Color(0.3, 0.15, 0.7, 1.0)
-				
-				var lb_btn = Button.new()
-				lb_btn.text = "Sıralama"
-				lb_btn.position = Vector2(60, 25)
-				lb_btn.size = Vector2(160, 60)
-				lb_btn.add_theme_font_size_override("font_size", 24)
-				lb_btn.add_theme_stylebox_override("normal", btn_style)
-				lb_btn.add_theme_stylebox_override("hover", btn_style)
-				lb_btn.connect("pressed", Callable(self, "_on_lb_pressed"))
-				bottom_bar.add_child(lb_btn)
-				
-				var share_btn = Button.new()
-				share_btn.text = "Paylaş"
-				share_btn.position = Vector2(290, 25)
-				share_btn.size = Vector2(160, 60)
-				share_btn.add_theme_font_size_override("font_size", 24)
-				share_btn.add_theme_stylebox_override("normal", btn_style)
-				share_btn.add_theme_stylebox_override("hover", btn_style)
-				share_btn.connect("pressed", Callable(self, "_on_share_pressed"))
-				bottom_bar.add_child(share_btn)
-				
-				# Popup Panel for Win/Lose
+		var margin = 15
+		var top_bar = Panel.new()
+		top_bar.add_theme_stylebox_override("panel", top_style)
+		top_bar.size = Vector2(540 - margin*2, 120)
+		top_bar.position = Vector2(margin, margin)
+		ui.add_child(top_bar)
+		
+		# Center Logo
+		var logo = Sprite2D.new()
+		logo.texture = load("res://Assets/Images/logo.jpg")
+		logo.position = Vector2(top_bar.size.x / 2, 60) # Centered in the top bar
+		var mat = CanvasItemMaterial.new()
+		mat.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+		logo.material = mat
+		if logo.texture:
+			var scale_ratio = 180.0 / logo.texture.get_height()
+			logo.scale = Vector2(scale_ratio, scale_ratio)
+		top_bar.add_child(logo)
+		
+		var bot_style = StyleBoxFlat.new()
+		bot_style.bg_color = Color(0.05, 0.05, 0.2, 0.85)
+		bot_style.corner_radius_top_left = 30
+		bot_style.corner_radius_top_right = 30
+		bot_style.corner_radius_bottom_left = 30
+		bot_style.corner_radius_bottom_right = 30
+		bot_style.border_width_top = 3
+		bot_style.border_width_bottom = 3
+		bot_style.border_color = Color(0.5, 0.3, 0.8, 0.9)
+		bot_style.shadow_size = 8
+		
+		var bottom_bar = Panel.new()
+		bottom_bar.add_theme_stylebox_override("panel", bot_style)
+		bottom_bar.size = Vector2(540 - margin*2, 110)
+		bottom_bar.position = Vector2(margin, get_viewport_rect().size.y - 110 - margin)
+		ui.add_child(bottom_bar)
+		
+		score_label = Label.new()
+		score_label.position = Vector2(20, 15)
+		score_label.add_theme_font_size_override("font_size", 24)
+		score_label.add_theme_color_override("font_outline_color", Color(0, 0, 0))
+		score_label.add_theme_constant_override("outline_size", 4)
+		top_bar.add_child(score_label)
+		
+		level_label = Label.new()
+		level_label.position = Vector2(20, 65)
+		level_label.add_theme_font_size_override("font_size", 24)
+		level_label.add_theme_color_override("font_outline_color", Color(0, 0, 0))
+		level_label.add_theme_constant_override("outline_size", 4)
+		top_bar.add_child(level_label)
+		
+		moves_label = Label.new()
+		moves_label.position = Vector2(top_bar.size.x - 170, 15)
+		moves_label.add_theme_font_size_override("font_size", 24)
+		moves_label.add_theme_color_override("font_outline_color", Color(0, 0, 0))
+		moves_label.add_theme_constant_override("outline_size", 4)
+		top_bar.add_child(moves_label)
+		
+		target_label = Label.new()
+		target_label.position = Vector2(top_bar.size.x - 170, 65)
+		target_label.add_theme_font_size_override("font_size", 24)
+		target_label.add_theme_color_override("font_outline_color", Color(0, 0, 0))
+		target_label.add_theme_constant_override("outline_size", 4)
+		top_bar.add_child(target_label)
+		
+		var btn_style = StyleBoxFlat.new()
+		btn_style.bg_color = Color(0.2, 0.1, 0.5, 0.9)
+		btn_style.corner_radius_top_left = 15
+		btn_style.corner_radius_top_right = 15
+		btn_style.corner_radius_bottom_left = 15
+		btn_style.corner_radius_bottom_right = 15
+		btn_style.border_width_bottom = 4
+		btn_style.border_color = Color(0.3, 0.15, 0.7, 1.0)
+		
+		var lb_btn = Button.new()
+		lb_btn.text = "Sıralama"
+		lb_btn.position = Vector2(60, 25)
+		lb_btn.size = Vector2(160, 60)
+		lb_btn.add_theme_font_size_override("font_size", 24)
+		lb_btn.add_theme_stylebox_override("normal", btn_style)
+		lb_btn.add_theme_stylebox_override("hover", btn_style)
+		lb_btn.connect("pressed", Callable(self, "_on_lb_pressed"))
+		bottom_bar.add_child(lb_btn)
+		
+		var share_btn = Button.new()
+		share_btn.text = "Paylaş"
+		share_btn.position = Vector2(290, 25)
+		share_btn.size = Vector2(160, 60)
+		share_btn.add_theme_font_size_override("font_size", 24)
+		share_btn.add_theme_stylebox_override("normal", btn_style)
+		share_btn.add_theme_stylebox_override("hover", btn_style)
+		share_btn.connect("pressed", Callable(self, "_on_share_pressed"))
+		bottom_bar.add_child(share_btn)
+		
+		# Popup Panel for Win/Lose
 		var popup_style = StyleBoxFlat.new()
 		popup_style.bg_color = Color(0.1, 0.1, 0.25, 0.95)
 		popup_style.border_width_left = 5
