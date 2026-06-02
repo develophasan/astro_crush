@@ -1,0 +1,57 @@
+name: "Android Export"
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  export-android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Download Godot
+        run: |
+          wget -q https://github.com/godotengine/godot/releases/download/4.6.2-stable/Godot_v4.6.2-stable_linux.x86_64.zip
+          unzip Godot_v4.6.2-stable_linux.x86_64.zip
+          mv Godot_v4.6.2-stable_linux.x86_64 godot
+          chmod +x godot
+
+      - name: Download Godot Export Templates
+        run: |
+          wget -q https://github.com/godotengine/godot/releases/download/4.6.2-stable/Godot_v4.6.2-stable_export_templates.tpz
+          unzip Godot_v4.6.2-stable_export_templates.tpz
+          mkdir -p ~/.local/share/godot/export_templates/4.6.2.stable/
+          mv templates/* ~/.local/share/godot/export_templates/4.6.2.stable/
+
+      - name: Install Android Build Template
+        run: |
+          mkdir -p android/build
+          unzip -q ~/.local/share/godot/export_templates/4.6.2.stable/android_source.zip -d android/build/
+          echo "Installed Android build template for Custom Build"
+
+      - name: Generate Android Keystore
+        run: |
+          keytool -genkey -v -keystore release.keystore -alias release -keyalg RSA -keysize 2048 -validity 10000 -storepass "astrocrush" -keypass "astrocrush" -dname "CN=Astro Crush,O=Game,C=TR"
+
+      - name: Export APK
+        run: |
+          mkdir -p build
+          # Double build to ensure plugins are loaded in headless
+          ./godot --headless --editor --quit || true
+          ./godot --headless --export-release "Android" build/AstroCrush.apk
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: AstroCrush-Android-APK
+          path: build/AstroCrush.apk
