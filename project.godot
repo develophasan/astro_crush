@@ -22,17 +22,12 @@ LeaderboardManager="*res://Scripts/LeaderboardManager.gd"
 ShareManager="*res://Scripts/ShareManager.gd"
 AudioManager="*res://Scripts/AudioManager.gd"
 AdManager="*res://Scripts/AdManager.gd"
-AdmobNode="*res://addons/admob/Admob.gd"
 
 [display]
 
 window/size/viewport_width=540
 window/size/viewport_height=960
 window/handheld/orientation=1
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/admob/plugin.cfg")
 
 [input]
 
