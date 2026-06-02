@@ -69,9 +69,7 @@ func _ready():
 	add_child(lb_btn)
 
 func _on_play_pressed():
-	AdManager.connect("interstitial_closed", Callable(self, "_on_ad_closed_to_play"), CONNECT_ONE_SHOT)
-	AdManager.load_interstitial()
-	AdManager.show_interstitial()
+	_on_ad_closed_to_play()
 
 func _on_ad_closed_to_play():
 	get_tree().change_scene_to_file("res://Scenes/Main/Game.tscn")

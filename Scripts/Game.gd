@@ -317,9 +317,7 @@ func _show_popup(win: bool):
 func _on_popup_action():
 	if popup_panel.get_node("ActionBtn").text == "Sıradaki Bölüm":
 		SaveManager.level_up()
-	AdManager.connect("interstitial_closed", Callable(self, "_on_ad_closed_to_continue"), CONNECT_ONE_SHOT)
-	AdManager.load_interstitial()
-	AdManager.show_interstitial()
+	_on_ad_closed_to_continue()
 
 func _on_ad_closed_to_continue():
 	_start_level()
