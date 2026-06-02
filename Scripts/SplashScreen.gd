@@ -2,14 +2,11 @@ extends Node2D
 
 func _ready():
 	# Create background
-	var bg = Sprite2D.new()
+	var bg = TextureRect.new()
 	bg.texture = load("res://Assets/Images/bg.jpg")
-	bg.position = Vector2(270, 480)
-	if bg.texture:
-		var scale_x = 540.0 / bg.texture.get_width()
-		var scale_y = 960.0 / bg.texture.get_height()
-		var final_scale = max(scale_x, scale_y)
-		bg.scale = Vector2(final_scale, final_scale)
+	bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	bg.stretch_mode = TextureRect.STRETCH_COVER
+	bg.size = get_viewport_rect().size
 	add_child(bg)
 	
 	# Falling pieces effect
@@ -68,4 +65,4 @@ func _spawn_falling_piece():
 	tween.tween_callback(piece.queue_free)
 
 func _on_splash_done():
-	get_tree().change_scene_to_file("res://Scenes/Main/IntroVideo.tscn")
+	get_tree().change_scene_to_file("res://Scenes/UI/MainMenu.tscn")

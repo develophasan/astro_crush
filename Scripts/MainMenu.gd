@@ -6,14 +6,11 @@ func _ready():
 		child.queue_free()
 		
 	# Background
-	var bg = Sprite2D.new()
+	var bg = TextureRect.new()
 	bg.texture = load("res://Assets/Images/bg.jpg")
-	bg.position = Vector2(270, 480)
-	if bg.texture:
-		var scale_x = 540.0 / bg.texture.get_width()
-		var scale_y = 960.0 / bg.texture.get_height()
-		var final_scale = max(scale_x, scale_y)
-		bg.scale = Vector2(final_scale, final_scale)
+	bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	bg.stretch_mode = TextureRect.STRETCH_COVER
+	bg.size = get_viewport_rect().size
 	add_child(bg)
 	
 	# Logo
@@ -36,7 +33,7 @@ func _ready():
 	hs_label.add_theme_constant_override("outline_size", 4)
 	hs_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	hs_label.size = Vector2(540, 50)
-	hs_label.position = Vector2(0, 450)
+	hs_label.position = Vector2(0, get_viewport_rect().size.y * 0.45)
 	add_child(hs_label)
 	
 	var btn_style = StyleBoxFlat.new()
@@ -50,7 +47,7 @@ func _ready():
 	
 	var play_btn = Button.new()
 	play_btn.text = "Oyuna Başla"
-	play_btn.position = Vector2(120, 550)
+	play_btn.position = Vector2(120, get_viewport_rect().size.y * 0.55)
 	play_btn.size = Vector2(300, 70)
 	play_btn.add_theme_font_size_override("font_size", 32)
 	play_btn.add_theme_stylebox_override("normal", btn_style)
@@ -60,7 +57,7 @@ func _ready():
 	
 	var lb_btn = Button.new()
 	lb_btn.text = "Sıralama"
-	lb_btn.position = Vector2(120, 650)
+	lb_btn.position = Vector2(120, get_viewport_rect().size.y * 0.65)
 	lb_btn.size = Vector2(300, 70)
 	lb_btn.add_theme_font_size_override("font_size", 32)
 	lb_btn.add_theme_stylebox_override("normal", btn_style)

@@ -33,14 +33,11 @@ func _setup_ui():
 		add_child(ui)
 		
 		# Background
-		var bg = Sprite2D.new()
+		var bg = TextureRect.new()
 		bg.texture = load("res://Assets/Images/bg.jpg")
-		bg.position = Vector2(270, 480) # Center of 540x960
-		if bg.texture:
-			var scale_x = 540.0 / bg.texture.get_width()
-			var scale_y = 960.0 / bg.texture.get_height()
-			var final_scale = max(scale_x, scale_y)
-			bg.scale = Vector2(final_scale, final_scale)
+		bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		bg.stretch_mode = TextureRect.STRETCH_COVER
+		bg.size = get_viewport_rect().size
 		add_child(bg)
 		
 		var top_style = StyleBoxFlat.new()
@@ -80,7 +77,7 @@ func _setup_ui():
 		var bottom_bar = Panel.new()
 		bottom_bar.add_theme_stylebox_override("panel", bot_style)
 		bottom_bar.size = Vector2(540, 130)
-		bottom_bar.position = Vector2(0, 830)
+		bottom_bar.position = Vector2(0, get_viewport_rect().size.y - 130)
 		ui.add_child(bottom_bar)
 		
 		score_label = Label.new()
@@ -156,7 +153,7 @@ func _setup_ui():
 		popup_panel = Panel.new()
 		popup_panel.add_theme_stylebox_override("panel", popup_style)
 		popup_panel.size = Vector2(400, 300)
-		popup_panel.position = Vector2(70, 300)
+		popup_panel.position = Vector2(70, (get_viewport_rect().size.y - 300) / 2)
 		popup_panel.visible = false
 		ui.add_child(popup_panel)
 		
