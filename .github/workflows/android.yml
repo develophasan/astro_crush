@@ -45,6 +45,10 @@ jobs:
           mkdir -p ~/.local/share/godot/export_templates/4.6.2.stable/
           mv templates/* ~/.local/share/godot/export_templates/4.6.2.stable/
 
+      - name: Import Godot Project
+        run: |
+          ./godot --headless --editor --quit || true
+
       - name: Install Android Build Template
         run: |
           ./godot --headless --install-android-build-template
