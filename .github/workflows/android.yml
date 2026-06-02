@@ -45,10 +45,6 @@ jobs:
           mkdir -p ~/.local/share/godot/export_templates/4.6.2.stable/
           mv templates/* ~/.local/share/godot/export_templates/4.6.2.stable/
 
-      - name: Install Android Build Template
-        run: |
-          ./godot --headless --install-android-build-template
-
       - name: Generate Android Keystore
         run: |
           keytool -genkey -v -keystore release.keystore -alias release -keyalg RSA -keysize 2048 -validity 10000 -storepass "astrocrush" -keypass "astrocrush" -dname "CN=Astro Crush,O=Game,C=TR"
