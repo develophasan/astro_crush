@@ -25,7 +25,7 @@ jobs:
           unzip -q Godot_v4.6.2-stable_export_templates.tpz
           mkdir -p android/build
           unzip -q templates/android_source.zip -d android/build/
-          echo "4.6.2.stable.official" > android/build/.build_version
+          printf "4.6.2.stable.official" > android/build/.build_version
           
           mkdir -p addons/AdmobPlugin
           cat << 'EOF' > addons/AdmobPlugin/android_export.cfg
@@ -35,8 +35,6 @@ jobs:
           app_id="ca-app-pub-7470017453637950~1769028185"
           [Release]
           app_id="ca-app-pub-7470017453637950~1769028185"
-          [Mediation]
-          enabled_networks=[]
           EOF
           echo "Installed Android build template and Admob Config"
 
