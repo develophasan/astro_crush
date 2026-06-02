@@ -19,14 +19,8 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Download and Install Android Build Template
+      - name: Setup AdMob Config
         run: |
-          wget -q https://github.com/godotengine/godot/releases/download/4.6.2-stable/Godot_v4.6.2-stable_export_templates.tpz
-          unzip -q Godot_v4.6.2-stable_export_templates.tpz
-          mkdir -p android/build
-          unzip -q templates/android_source.zip -d android/build/
-          printf "4.6.2.stable.official" > android/build/.build_version
-          
           mkdir -p addons/AdmobPlugin
           cat << 'EOF' > addons/AdmobPlugin/android_export.cfg
           [General]
@@ -36,23 +30,48 @@ jobs:
           [Release]
           app_id="ca-app-pub-7470017453637950~1769028185"
           EOF
-          echo "Installed Android build template and Admob Config"
+
+      - name: Download Godot
+        run: |
+          wget -q https://github.com/godotengine/godot/releases/download/4.6.2-stable/Godot_v4.6.2-stable_linux.x86_64.zip
+          unzip -q Godot_v4.6.2-stable_linux.x86_64.zip
+          mv Godot_v4.6.2-stable_linux.x86_64 godot
+          chmod +x godot
+
+      - name: Download Godot Export Templates
+        run: |
+          wget -q https://github.com/godotengine/godot/releases/download/4.6.2-stable/Godot_v4.6.2-stable_export_templates.tpz
+          unzip -q Godot_v4.6.2-stable_export_templates.tpz
+          mkdir -p ~/.local/share/godot/export_templates/4.6.2.stable/
+          mv templates/* ~/.local/share/godot/export_templates/4.6.2.stable/
+
+      - name: Install Android Build Template
+        run: |
+          ./godot --headless --install-android-build-template
 
       - name: Generate Android Keystore
         run: |
           keytool -genkey -v -keystore release.keystore -alias release -keyalg RSA -keysize 2048 -validity 10000 -storepass "astrocrush" -keypass "astrocrush" -dname "CN=Astro Crush,O=Game,C=TR"
 
+      - name: Configure Godot Editor Settings
+        run: |
+          mkdir -p ~/.config/godot
+          cat << 'EOF' > ~/.config/godot/editor_settings-4.tres
+          [gd_resource type="EditorSettings" format=3]
+          [resource]
+          export/android/android_sdk_path = "/usr/local/lib/android/sdk"
+          export/android/debug_keystore = "/home/runner/work/astro_crush/astro_crush/release.keystore"
+          export/android/debug_keystore_user = "release"
+          export/android/debug_keystore_pass = "astrocrush"
+          EOF
+
       - name: Export APK
-        uses: firebelley/godot-export@v5.2.1
-        with:
-          godot_executable_download_url: https://github.com/godotengine/godot/releases/download/4.6.2-stable/Godot_v4.6.2-stable_linux.x86_64.zip
-          godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/4.6.2-stable/Godot_v4.6.2-stable_export_templates.tpz
-          relative_project_path: ./
-          archive_output: true
-          export_debug: false
+        run: |
+          mkdir -p build
+          ./godot --headless --export-release "Android" build/AstroCrush.apk
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: AstroCrush-Android-APK
-          path: /home/runner/.local/share/godot/archives/*
+          path: build/AstroCrush.apk
