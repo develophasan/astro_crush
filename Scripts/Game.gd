@@ -36,7 +36,7 @@ func _setup_ui():
 		var bg = TextureRect.new()
 		bg.texture = load("res://Assets/Images/bg.jpg")
 		bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		bg.stretch_mode = TextureRect.STRETCH_COVER
+		bg.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 		bg.size = get_viewport_rect().size
 		add_child(bg)
 		
